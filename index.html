@@ -51,17 +51,43 @@
         color: #2a2a2a;
         border: 1px solid #e1e4e8;
       }
+      .button-container {
+        display: flex;
+        justify-content: left;
+        margin-bottom: 10px;
+      }
+      .copy-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+      .copy-button:hover {
+        background-color: #0056b3;
+      }
     </style>
   </head>
   <body>
     <h1>Markdown to Confluence Converter</h1>
     <div class="container">
       <textarea id="markdown" placeholder="Paste Markdown here..."></textarea>
-      <textarea
-        id="confluence"
-        placeholder="Confluence Wiki format will appear here..."
-        readonly
-      ></textarea>
+      <div style="flex: 1; display: flex; flex-direction: column">
+        <div class="button-container">
+          <button class="copy-button" id="copy-button">
+            Copy to Clipboard
+          </button>
+        </div>
+        <textarea
+          id="confluence"
+          placeholder="Confluence Wiki format will appear here..."
+          readonly
+        ></textarea>
+      </div>
     </div>
     <script type="module">
       import init, {
@@ -73,11 +99,18 @@
 
         const markdownInput = document.getElementById("markdown");
         const confluenceOutput = document.getElementById("confluence");
+        const copyButton = document.getElementById("copy-button");
 
         markdownInput.addEventListener("input", () => {
           const markdownText = markdownInput.value;
           const confluenceText = convert_markdown_to_confluence(markdownText);
           confluenceOutput.value = confluenceText;
+        });
+
+        copyButton.addEventListener("click", () => {
+          confluenceOutput.select();
+          document.execCommand("copy");
+          alert("Confluence content copied to clipboard!");
         });
       }
 
