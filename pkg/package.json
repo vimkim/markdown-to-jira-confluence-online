@@ -1,0 +1,15 @@
+{
+  "name": "markdown_to_confluence",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "markdown_to_confluence_bg.wasm",
+    "markdown_to_confluence.js",
+    "markdown_to_confluence.d.ts"
+  ],
+  "main": "markdown_to_confluence.js",
+  "types": "markdown_to_confluence.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
