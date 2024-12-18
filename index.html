@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown to Confluence Converter</title>
+  </head>
+  <body>
+    <div style="display: flex; gap: 20px">
+      <textarea
+        id="markdown"
+        placeholder="Paste Markdown here..."
+        style="width: 50%; height: 800px"
+      ></textarea>
+      <textarea
+        id="confluence"
+        placeholder="Confluence Wiki format will appear here..."
+        style="width: 50%; height: 800px"
+        readonly
+      ></textarea>
+    </div>
+    <script type="module">
+      import init, {
+        convert_markdown_to_confluence,
+      } from "./pkg/markdown_to_confluence.js";
+
+      async function main() {
+        await init();
+
+        const markdownInput = document.getElementById("markdown");
+        const confluenceOutput = document.getElementById("confluence");
+
+        markdownInput.addEventListener("input", () => {
+          const markdownText = markdownInput.value;
+          const confluenceText = convert_markdown_to_confluence(markdownText);
+          console.log(markdownText);
+          console.log(confluenceText);
+          confluenceOutput.value = confluenceText;
+        });
+      }
+
+      main();
+    </script>
+  </body>
+</html>
