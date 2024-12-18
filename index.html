@@ -4,18 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Markdown to Confluence Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+        color: #333;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #343a40;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+      .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      textarea {
+        flex: 1;
+        min-width: 48%;
+        height: 75vh;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+        padding: 15px;
+        resize: none;
+        overflow: auto;
+      }
+      textarea:focus {
+        outline: none;
+      }
+      #markdown {
+        background-color: #fff;
+        color: #495057;
+      }
+      #confluence {
+        background-color: #f5f7fa;
+        color: #2a2a2a;
+        border: 1px solid #e1e4e8;
+      }
+    </style>
   </head>
   <body>
-    <div style="display: flex; gap: 20px">
-      <textarea
-        id="markdown"
-        placeholder="Paste Markdown here..."
-        style="width: 50%; height: 800px"
-      ></textarea>
+    <h1>Markdown to Confluence Converter</h1>
+    <div class="container">
+      <textarea id="markdown" placeholder="Paste Markdown here..."></textarea>
       <textarea
         id="confluence"
         placeholder="Confluence Wiki format will appear here..."
-        style="width: 50%; height: 800px"
         readonly
       ></textarea>
     </div>
@@ -33,8 +77,6 @@
         markdownInput.addEventListener("input", () => {
           const markdownText = markdownInput.value;
           const confluenceText = convert_markdown_to_confluence(markdownText);
-          console.log(markdownText);
-          console.log(confluenceText);
           confluenceOutput.value = confluenceText;
         });
       }
