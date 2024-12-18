@@ -129,4 +129,4 @@ Feel free to open issues or submit pull requests on [GitHub](https://github.com/
 
 This project is licensed under the [MIT License](LICENSE).
 
-For questions or feedback, feel free to open an issue or contact us at [your-email@example.com](mailto:your-email@example.com).
+For questions or feedback, feel free to open an issue or contact us at [kimdhyungg@gmail.com](mailto:kimdhyungg@gmail.com).
