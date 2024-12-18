@@ -70,6 +70,23 @@
       .copy-button:hover {
         background-color: #0056b3;
       }
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: 1000;
+      }
+      .notification.show {
+        opacity: 1;
+      }
     </style>
   </head>
   <body>
@@ -89,6 +106,9 @@
         ></textarea>
       </div>
     </div>
+    <div class="notification" id="notification">
+      Confluence content copied to clipboard!
+    </div>
     <script type="module">
       import init, {
         convert_markdown_to_confluence,
@@ -100,6 +120,7 @@
         const markdownInput = document.getElementById("markdown");
         const confluenceOutput = document.getElementById("confluence");
         const copyButton = document.getElementById("copy-button");
+        const notification = document.getElementById("notification");
 
         markdownInput.addEventListener("input", () => {
           const markdownText = markdownInput.value;
@@ -110,7 +131,12 @@
         copyButton.addEventListener("click", () => {
           confluenceOutput.select();
           document.execCommand("copy");
-          alert("Confluence content copied to clipboard!");
+
+          // Show notification
+          notification.classList.add("show");
+          setTimeout(() => {
+            notification.classList.remove("show");
+          }, 2000);
         });
       }
 
