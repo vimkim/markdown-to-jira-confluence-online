@@ -9,3 +9,7 @@ pulldown-cmark = "0.12.2" # For Markdown parsing
 
 [lib]
 crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "try_conversion"
+path = "src/bin/try_conversion.rs"
