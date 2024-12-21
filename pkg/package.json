@@ -5,11 +5,13 @@
   "files": [
     "markdown_to_confluence_bg.wasm",
     "markdown_to_confluence.js",
+    "markdown_to_confluence_bg.js",
     "markdown_to_confluence.d.ts"
   ],
   "main": "markdown_to_confluence.js",
   "types": "markdown_to_confluence.d.ts",
   "sideEffects": [
+    "./markdown_to_confluence.js",
     "./snippets/*"
   ]
 }
