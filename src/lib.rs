@@ -29,7 +29,7 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
                     };
 
                     // Start the heading in Confluence format
-                    output.push_str(&format!("\n\n{} ", heading_level));
+                    output.push_str(&format!("{} ", heading_level));
 
                     // Optionally include `id` if needed
                     if let Some(id_value) = id {
@@ -46,8 +46,16 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
                         output.push_str(&format!("[Attrs: {:?}] ", attrs));
                     }
                 }
-                Tag::Emphasis => output.push_str(" _"),
-                Tag::Strong => output.push_str(" *"),
+                Tag::Emphasis => {
+                    if list_depth == 0 {
+                        output.push_str(" _")
+                    }
+                }
+                Tag::Strong => {
+                    if list_depth == 0 {
+                        output.push_str(" *")
+                    }
+                }
                 Tag::List(Some(_)) => {
                     // Ordered list: push `true` to stack
                     list_stack.push(true);
@@ -59,12 +67,14 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
                     list_depth += 1;
                 }
                 Tag::Item => {
+                    output.push('\n');
+
                     // Use the last value in the stack to determine list type
                     if let Some(&is_ordered_list) = list_stack.last() {
                         if is_ordered_list {
-                            output.push_str(&format!("\n{} ", "#".repeat(list_depth)));
+                            output.push_str(&format!("{} ", "#".repeat(list_depth)));
                         } else {
-                            output.push_str(&format!("\n{} ", "*".repeat(list_depth)));
+                            output.push_str(&format!("{} ", "*".repeat(list_depth)));
                         }
                     }
                 }
@@ -82,26 +92,55 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
                 }
                 _ => {}
             },
+
             Event::End(tag) => match tag {
-                TagEnd::Heading(_) => output.push('\n'),
-                TagEnd::Emphasis => output.push_str("_ "),
-                TagEnd::Strong => output.push_str("* "),
+                TagEnd::Heading(_) => output.push_str("\n\n"),
+                TagEnd::Emphasis => {
+                    if list_depth == 0 {
+                        output.push_str("_ ")
+                    }
+                }
+                TagEnd::Strong => {
+                    if list_depth == 0 {
+                        output.push_str("* ")
+                    }
+                }
                 TagEnd::List(_) => {
                     // Pop the stack to restore the previous list type
                     list_stack.pop();
                     list_depth -= 1;
+
                     if list_depth == 0 {
                         output.push('\n');
                     }
                 }
-                TagEnd::Item => {
-                    // Add a line break after each list item
-                }
+                TagEnd::Item => {}
                 TagEnd::CodeBlock => {
                     // Write the Confluence code block end marker
                     output.push_str("{code}");
+                    if list_depth == 0 {
+                        output.push('\n');
+                    }
                 }
-                _ => {}
+                TagEnd::Paragraph => {
+                    if list_depth == 0 {
+                        output.push('\n');
+                    }
+                }
+                TagEnd::BlockQuote(_) => todo!(),
+                TagEnd::HtmlBlock => todo!(),
+                TagEnd::FootnoteDefinition => todo!(),
+                TagEnd::DefinitionList => todo!(),
+                TagEnd::DefinitionListTitle => todo!(),
+                TagEnd::DefinitionListDefinition => todo!(),
+                TagEnd::Table => todo!(),
+                TagEnd::TableHead => todo!(),
+                TagEnd::TableRow => todo!(),
+                TagEnd::TableCell => todo!(),
+                TagEnd::Strikethrough => todo!(),
+                TagEnd::Link => todo!(),
+                TagEnd::Image => todo!(),
+                TagEnd::MetadataBlock(_) => todo!(),
             },
             Event::Text(text) => {
                 // Add text content
@@ -119,7 +158,14 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
                 // Add raw HTML content
                 output.push_str(&format!("{{html}}{}{{html}}", html));
             }
-            _ => {}
+            Event::InlineMath(_) => todo!(),
+            Event::DisplayMath(_) => todo!(),
+            Event::InlineHtml(_) => todo!(),
+            Event::FootnoteReference(_) => todo!(),
+            Event::Rule => {
+                output.push_str("\n----\n\n");
+            }
+            Event::TaskListMarker(_) => todo!(),
         }
     }
 
