@@ -19,3 +19,6 @@ build:
 
 serve-dev: build
     python -m http.server 8000 -d public
+
+gh-deploy: build
+    npx gh-pages -d public
