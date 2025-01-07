@@ -22,3 +22,6 @@ serve-dev: build
 
 gh-deploy: build
     npx gh-pages -d public
+
+test:
+    cargo test
