@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Markdown to Confluence Converter</title>
+    <title>Markdown to HTML Converter</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -90,7 +90,7 @@
     </style>
   </head>
   <body>
-    <h1>Markdown to Confluence Converter</h1>
+    <h1>Markdown to HTML Converter</h1>
     <div class="container">
       <textarea id="markdown" placeholder="Paste Markdown here..."></textarea>
       <div style="flex: 1; display: flex; flex-direction: column">
@@ -107,7 +107,7 @@
       </div>
     </div>
     <div class="notification" id="notification">
-      Confluence content copied to clipboard!
+      HTML content copied to clipboard!
     </div>
     <script type="module">
       import init, {
@@ -124,8 +124,8 @@
 
         markdownInput.addEventListener("input", () => {
           const markdownText = markdownInput.value;
-          const confluenceText = convert_markdown_to_html(markdownText);
-          confluenceOutput.value = confluenceText;
+          const htmlText = convert_markdown_to_html(markdownText);
+          confluenceOutput.value = htmlText;
         });
 
         copyButton.addEventListener("click", () => {
