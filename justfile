@@ -19,10 +19,10 @@ dist-clean-wasm-build: dist-clean
     cp -R www/* dist/*
     just wasm-build
 
-serve-dev: build
+serve-dev: wasm-build
     python -m http.server 8000 -d dist
 
-gh-deploy: build
+gh-deploy: dist-clean-wasm-build
     npx gh-pages -d dist
 
 test:
