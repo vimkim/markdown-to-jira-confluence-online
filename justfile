@@ -2,8 +2,8 @@ _default:
     just --choose
 
 build-run:
-    wasm-pack build --target web
-    simple-http-server .
+    wasm-pack build --target web --out-dir ./dist/pkg/
+    simple-http-server dist
 
 cargo-run-try-conversion:
     cargo run --bin try_conversion
@@ -16,7 +16,7 @@ dist-clean:
 
 dist-clean-wasm-build: dist-clean
     mkdir -p ./dist/
-    cp -R www/* dist/*
+    cp -R www/* dist
     just wasm-build
 
 serve-dev: wasm-build
