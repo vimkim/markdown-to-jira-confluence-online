@@ -2,6 +2,15 @@ use pulldown_cmark::{CodeBlockKind, CowStr, Event, HeadingLevel, Parser, Tag, Ta
 use wasm_bindgen::prelude::wasm_bindgen;
 
 #[wasm_bindgen]
+pub fn convert_markdown_to_html(input: &str) -> String {
+    let parser = Parser::new(input);
+
+    let mut html_output = String::new();
+    pulldown_cmark::html::push_html(&mut html_output, parser);
+    html_output
+}
+
+#[wasm_bindgen]
 pub fn convert_markdown_to_confluence(input: &str) -> String {
     let parser = Parser::new(input);
     let mut output = String::new();
