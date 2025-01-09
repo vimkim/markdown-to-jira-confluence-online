@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
+export const convert_markdown_to_html: (a: number, b: number) => [number, number];
 export const convert_markdown_to_confluence: (a: number, b: number) => [number, number];
 export const __wbindgen_export_0: WebAssembly.Table;
 export const __wbindgen_malloc: (a: number, b: number) => number;

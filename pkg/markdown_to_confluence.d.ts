@@ -1,11 +1,13 @@
 /* tslint:disable */
 /* eslint-disable */
+export function convert_markdown_to_html(input: string): string;
 export function convert_markdown_to_confluence(input: string): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly convert_markdown_to_html: (a: number, b: number) => [number, number];
   readonly convert_markdown_to_confluence: (a: number, b: number) => [number, number];
   readonly __wbindgen_export_0: WebAssembly.Table;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
