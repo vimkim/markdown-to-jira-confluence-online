@@ -21,13 +21,18 @@ dist-clean-wasm-build: dist-clean
     cp -R www/* dist
     just wasm-build-debug
 
+dist-clean-wasm-build-release: dist-clean
+    mkdir -p ./dist/
+    cp -R www/* dist
+    just wasm-build-release
+
 watch:
     cargo watch -w src -s "just dist-clean-wasm-build-run"
 
 serve-dev: wasm-build-debug
     python -m http.server 8000 -d dist
 
-gh-deploy: dist-clean-wasm-build
+gh-deploy: dist-clean-wasm-build-release
     npx gh-pages -d dist
 
 test:

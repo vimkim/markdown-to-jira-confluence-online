@@ -179,7 +179,12 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
             },
             Event::Text(text) => {
                 // Add text content
-                output.push_str(&text);
+                if let Some(last_tag) = event_stack.back() {
+                    if matches!(last_tag, Tag::Link { .. }) {
+                    } else {
+                        output.push_str(&text);
+                    }
+                }
             }
             Event::SoftBreak | Event::HardBreak => {
                 // Add a line break
