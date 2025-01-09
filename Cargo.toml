@@ -5,7 +5,8 @@ edition = "2021"
 
 [dependencies]
 wasm-bindgen = "0.2.99"
-pulldown-cmark = "0.12.2" # For Markdown parsing
+pulldown-cmark = "0.12.2"                                # For Markdown parsing
+web-sys = { version = "0.3.76", features = ["console"] }
 
 [lib]
 crate-type = ["cdylib", "rlib"]
