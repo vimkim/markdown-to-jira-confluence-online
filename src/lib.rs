@@ -99,9 +99,35 @@ pub fn convert_markdown_to_confluence(input: &str) -> String {
                     // Start a generic code block for indented code
                     output.push_str("\n{code}\n");
                 }
-                _ => {}
+                Tag::CodeBlock(CodeBlockKind::Indented) => {
+                    output.push_str("\n{code}\n");
+                }
+                Tag::Paragraph => todo!(),
+                Tag::BlockQuote(block_quote_kind) => todo!(),
+                Tag::HtmlBlock => todo!(),
+                Tag::FootnoteDefinition(cow_str) => todo!(),
+                Tag::DefinitionList => todo!(),
+                Tag::DefinitionListTitle => todo!(),
+                Tag::DefinitionListDefinition => todo!(),
+                Tag::Table(vec) => todo!(),
+                Tag::TableHead => todo!(),
+                Tag::TableRow => todo!(),
+                Tag::TableCell => todo!(),
+                Tag::Strikethrough => todo!(),
+                Tag::Link {
+                    link_type,
+                    dest_url,
+                    title,
+                    id,
+                } => todo!(),
+                Tag::Image {
+                    link_type,
+                    dest_url,
+                    title,
+                    id,
+                } => todo!(),
+                Tag::MetadataBlock(metadata_block_kind) => todo!(),
             },
-
             Event::End(tag) => match tag {
                 TagEnd::Heading(_) => output.push_str("\n\n"),
                 TagEnd::Emphasis => {
