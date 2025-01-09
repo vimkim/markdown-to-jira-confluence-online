@@ -1,21 +1,5 @@
 let wasm;
 
-function logError(f, args) {
-    try {
-        return f.apply(this, args);
-    } catch (e) {
-        let error = (function () {
-            try {
-                return e instanceof Error ? `${e.message}\n\nStack:\n${e.stack}` : e.toString();
-            } catch(_) {
-                return "<failed to stringify thrown value>";
-            }
-        }());
-        console.error("wasm-bindgen: imported JS function that was not marked as `catch` threw an error:", error);
-        throw e;
-    }
-}
-
 const cachedTextDecoder = (typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8', { ignoreBOM: true, fatal: true }) : { decode: () => { throw Error('TextDecoder not available') } } );
 
 if (typeof TextDecoder !== 'undefined') { cachedTextDecoder.decode(); };
@@ -53,8 +37,6 @@ const encodeString = (typeof cachedTextEncoder.encodeInto === 'function'
 
 function passStringToWasm0(arg, malloc, realloc) {
 
-    if (typeof(arg) !== 'string') throw new Error(`expected a string argument, found ${typeof(arg)}`);
-
     if (realloc === undefined) {
         const buf = cachedTextEncoder.encode(arg);
         const ptr = malloc(buf.length, 1) >>> 0;
@@ -83,7 +65,7 @@ function passStringToWasm0(arg, malloc, realloc) {
         ptr = realloc(ptr, len, len = offset + arg.length * 3, 1) >>> 0;
         const view = getUint8ArrayMemory0().subarray(ptr + offset, ptr + len);
         const ret = encodeString(arg, view);
-        if (ret.read !== arg.length) throw new Error('failed to pass whole string');
+
         offset += ret.written;
         ptr = realloc(ptr, len, offset, 1) >>> 0;
     }
@@ -163,9 +145,9 @@ async function __wbg_load(module, imports) {
 function __wbg_get_imports() {
     const imports = {};
     imports.wbg = {};
-    imports.wbg.__wbg_log_464d1b2190ca1e04 = function() { return logError(function (arg0) {
+    imports.wbg.__wbg_log_464d1b2190ca1e04 = function(arg0) {
         console.log(arg0);
-    }, arguments) };
+    };
     imports.wbg.__wbindgen_init_externref_table = function() {
         const table = wasm.__wbindgen_export_0;
         const offset = table.grow(4);
